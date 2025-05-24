@@ -16,7 +16,12 @@ echo "EXPOSE 5050" >> tempdir/Dockerfile
 echo "CMD python3 /home/myapp/sample_app.py" >> tempdir/Dockerfile
 
 cd tempdir
+
+# Clean up existing container if it exists
+docker rm -f samplerunning 2>/dev/null || true
+
+# Build & run the new container
 docker build -t sampleapp .
 docker run -t -d -p 5050:5050 --name samplerunning sampleapp
+sleep 5
 docker ps -a
-# trigger rebuild
